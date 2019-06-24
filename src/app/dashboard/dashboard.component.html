@@ -1,6 +1,10 @@
-<p>
-  dashboard works!
-</p>
-
 <h2>{{ currentUser.displayName }}</h2>
 <button type="button" (click)="authService.SignOut()">Sign Out</button>
+
+
+<button type="button" (click)="create()">I had a drink</button>
+
+<h1> {{ eightHoursCount }} </h1>
+<div *ngFor="let drink of drinks">
+    <app-drinks [drink]="drink"></app-drinks>
+</div>
