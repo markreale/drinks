@@ -18,7 +18,6 @@ export class UsersService {
 
 
     getUser() {
-        console.log(this.currentUser.uid);
         let userCollection = 'users/' + this.currentUser.uid;
          this.itemDoc = this.db.doc(userCollection);
         
@@ -26,7 +25,6 @@ export class UsersService {
     }
 
     updateUser(newSettings){
-        console.log('update svc');
           return this.db.collection('users').doc(this.currentUser.uid).set(newSettings);
     }
 }

@@ -26,7 +26,6 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
 
         this.usersService.getUser().subscribe(data => {
-            console.log(data);
             if (data) {
                 this.user = data;
             }
@@ -49,17 +48,18 @@ export class DashboardComponent implements OnInit {
                 };
             });
             for (let i = 0; i < this.drinks.length; i++) {
-                console.log(this.drinks[i].date.seconds);
-                console.log(this.currentTime.getTime() / 1000);
                 if ((this.currentTime.getTime() / 1000 - (60 * 60 * (this.user.hoursThreshold ? this.user.hoursThreshold : 8))) < this.drinks[i].date.seconds) {
-                    console.log('danger');
                     this.eightHoursCount += 1;
                 }
                 this.currentTime = new Date();
-                console.log(this.user.maxDrinks);
                 this.drinksLeft = this.user.maxDrinks - this.eightHoursCount;
                 this.drinksLeft = this.drinksLeft >= 0 ? this.drinksLeft : 0;
                 this.drinks[i].since = this.currentTime.getTime() / 1000 - this.drinks[i].date.seconds;
+                
+                let daysSince = Math.floor(this.drinks[i].since / (60 * 60 * 24));
+                let hoursSince = Math.floor((this.drinks[i].since - daysSince * 24 * 60 * 60) / (60 * 60));
+                let minutesSince = Math.floor((this.drinks[i].since - (daysSince * 24 * 60 * 60 + hoursSince * 60 * 60)) / (60 * 60));
+                this.drinks[i].sinceString = daysSince + 'day(s) ' + hoursSince + 'hour(s) ' + minutesSince + 'minute(s) ago';
             }
 
         });
