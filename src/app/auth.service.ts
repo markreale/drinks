@@ -53,6 +53,7 @@ export class AuthService {
         return this.afAuth.auth.signOut().then(() => {
             sessionStorage.removeItem('user');
             this.router.navigate(['login']);
+            window.location.reload();
         })
     }
 
